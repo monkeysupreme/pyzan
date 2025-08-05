@@ -2,5 +2,6 @@ import uuid
 
 
 class VirtualMachineID:
-    def __str__(self):
-        return uuid.uuid4().hex()
+    @staticmethod
+    def get() -> str:
+        return str(uuid.uuid4().hex)
