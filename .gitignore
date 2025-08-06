@@ -7,3 +7,4 @@ build/
 .venv
 .idea/
 logs/
+vm_state.db

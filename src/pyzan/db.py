@@ -5,7 +5,7 @@ import os
 from pyzan.log import Logger
 
 
-db_log = Logger(module="DB")
+db_log = Logger(module="DB", log_file="logs/db.log")
 
 
 class Database(sqlite3.Connection):

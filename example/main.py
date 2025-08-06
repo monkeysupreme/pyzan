@@ -1,17 +1,15 @@
 from pyzan.vm import VirtualMachine
 from pyzan.op_code import OpCode
 from pyzan.vm_id import VirtualMachineID
+from pyzan.parser import FileParser
 
 if __name__ == "__main__":
     prog = [
-        (OpCode.PUSH, 10),
-        (OpCode.PUSH, 10),
-        (OpCode.ADD,),
-        (OpCode.PRINT,),
+        (OpCode.OPEN, "test.txt", "w"),
         (OpCode.END,)
     ]
 
     vm = VirtualMachine(VirtualMachineID.get())
 
     vm.init()
-    vm.run(program=prog)
+    vm.run(program=prog, type="debug")
