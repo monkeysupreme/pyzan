@@ -1,2 +1,4 @@
-OPEN "test.txt" "w"
+OPEN test_files/test1.txt w
+WRITE Test
+READ test_files/test1.txt
 END

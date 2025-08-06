@@ -8,3 +8,4 @@ build/
 .idea/
 logs/
 vm_state.db
+test_files/

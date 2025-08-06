@@ -18,8 +18,16 @@ class FileParser:
 
         if op == OpCode.OPEN:
             if len(args) != 2:
-                raise ValueError("OPEN requires 2 arguments")
+                raise ValueError("OPEN requires 2 arguments [filename] [mode]")
             return op, args[0], args[1]
+        if op == OpCode.WRITE:
+            if len(args) < 1:
+                raise ValueError("WRITE requires 1 argument [data]")
+            return op, " ".join(args)
+        if op == OpCode.READ:
+            if len(args) < 1:
+                raise ValueError("READ requires 1 argument [filename]")
+            return op, args[0]
         else:
             return (op,)
 

@@ -4,7 +4,7 @@ from typing import get_type_hints, Type, Any
 
 
 class Serializable:
-    __exclude__ = ["state_db"]
+    __exclude__ = ["state_db", "opened_file", "opened_files"]
 
     def to_dict(self) -> dict:
         result = {}
