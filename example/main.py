@@ -1,13 +1,9 @@
-from pyzan.vm import VirtualMachine
-from pyzan.op_code import OpCode
-from pyzan.vm_id import VirtualMachineID
 from pyzan.parser import FileParser
+from pyzan.vm import VirtualMachine
+from pyzan.vm_id import VirtualMachineID
 
 if __name__ == "__main__":
-    prog = FileParser.parse_file(file="example/example.zan")
-
     vm = VirtualMachine(VirtualMachineID.get())
-
     vm.init()
-
-    vm.run(program=prog, type="debug")
+    parsed_vm_prog_file = FileParser.parse_file(file="example/example.pzn")
+    vm.run(program=parsed_vm_prog_file, type="debug")

@@ -24,6 +24,8 @@ class FileParser:
             if len(args) < 1:
                 raise ValueError("WRITE requires 1 argument [data]")
             return op, " ".join(args)
+        if op == OpCode.WRITEMANY:
+            return op, *args
         if op == OpCode.READ:
             if len(args) < 1:
                 raise ValueError("READ requires 1 argument [filename]")

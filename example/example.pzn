@@ -1,0 +1,28 @@
+OPEN test_files/1.txt w
+OPEN test_files/2.txt w
+OPEN test_files/3.txt w
+WRITEMANY HellO World
+READ test_files/1.txt
+READ test_files/2.txt
+READ test_files/3.txt
+END
+
+# Debug Output -
+
+#[2025-08-07 22:55:19][VM] Executing OpCode => OpCode.OPEN
+#[2025-08-07 22:55:19][VM] Opened file 'test_files/1.txt' in mode 'w'
+#[2025-08-07 22:55:19][VM] Executing OpCode => OpCode.OPEN
+#[2025-08-07 22:55:19][VM] Opened file 'test_files/2.txt' in mode 'w'
+#[2025-08-07 22:55:19][VM] Executing OpCode => OpCode.OPEN
+#[2025-08-07 22:55:19][VM] Opened file 'test_files/3.txt' in mode 'w'
+#[2025-08-07 22:55:19][VM] Executing OpCode => OpCode.WRITEMANY
+#[2025-08-07 22:55:19][VM] Wrote to file test_files/1.txt => HellO World
+#[2025-08-07 22:55:19][VM] Wrote to file test_files/2.txt => HellO World
+#[2025-08-07 22:55:19][VM] Wrote to file test_files/3.txt => HellO World
+#[2025-08-07 22:55:19][VM] Executing OpCode => OpCode.READ
+#READ test_files/1.txt: HellO World
+#[2025-08-07 22:55:19][VM] Executing OpCode => OpCode.READ
+#READ test_files/2.txt: HellO World
+#[2025-08-07 22:55:19][VM] Executing OpCode => OpCode.READ
+#READ test_files/3.txt: HellO World
+#[2025-08-07 22:55:19][VM] Executing OpCode => OpCode.END

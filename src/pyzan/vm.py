@@ -2,7 +2,7 @@ from pyzan.db import Database
 from pyzan.log import Logger
 from pyzan.serialization import Serializable
 from pyzan.op_code import OpCode
-from pyzan.file_handler import open_file
+from pyzan.db import VirtualMachineMemoryStorage
 
 from typing import List, TextIO
 
@@ -18,14 +18,18 @@ class VirtualMachine(Serializable):
         self.running: bool = True
 
         self.state_db: Database = None
-        self.opened_files: List[TextIO] = []
 
+        self.opened_files: List[TextIO] = []
         self.opened_file: TextIO = None
 
     def init(self):
         self.state_db = Database("vm_state.db")
+        self.memory = VirtualMachineMemoryStorage()
 
     def run(self, program, type="default"):
+        if not program:
+            vm_log.info("Running without program...")
+            return
         while self.running and self.instruction_pointer < len(program):
             instruction = program[self.instruction_pointer]
             op = instruction[0]
@@ -45,8 +49,29 @@ class VirtualMachine(Serializable):
                     self.running = False
             elif op == OpCode.WRITE:
                 data = instruction[1]
-                if self.opened_file:
-                    self.opened_file.write(data)
+                self.opened_file.write(data)
+            elif op == OpCode.WRITEMANY:
+                flat_args = []
+                for item in instruction[1:]:
+                    if isinstance(item, list):
+                        flat_args.extend(item)
+                    else:
+                        flat_args.append(item)
+
+                data = " ".join(flat_args)
+
+                if not self.opened_file:
+                    vm_log.info("No files to write during WRITEMANY")
+                else:
+                    for file in self.opened_files:
+                        try:
+                            file.write(data)
+                            file.flush()
+                            if type == "debug":
+                                vm_log.info(f"Wrote to file {file.name} => {data}")
+                        except Exception:
+                            print(f"Failed to write to {file.name}")
+
             elif op == OpCode.READ:
                 filename = instruction[1]
                 if self.opened_file:
